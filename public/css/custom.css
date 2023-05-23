@@ -1,0 +1,290 @@
+/* Orange Light scheme (Default) */
+/* Can be forced with data-theme="light" */
+[data-theme="light"],
+:root:not([data-theme="dark"]) {
+  --primary: #fb8c00;
+  --primary-hover: #f57c00;
+  --primary-focus: rgba(251, 140, 0, 0.125);
+  --primary-inverse: #fff;
+}
+
+/* Orange Dark scheme (Auto) */
+/* Automatically enabled if user has Dark mode enabled */
+@media only screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --primary: #fb8c00;
+    --primary-hover: #ff9800;
+    --primary-focus: rgba(251, 140, 0, 0.25);
+    --primary-inverse: #fff;
+  }
+}
+
+/* Orange Dark scheme (Forced) */
+/* Enabled if forced with data-theme="dark" */
+[data-theme="dark"] {
+  --primary: #fb8c00;
+  --primary-hover: #ff9800;
+  --primary-focus: rgba(251, 140, 0, 0.25);
+  --primary-inverse: #fff;
+}
+
+/* Orange (Common styles) */
+:root {
+  --form-element-active-border-color: var(--primary);
+  --form-element-focus-color: var(--primary-focus);
+  --switch-color: var(--primary-inverse);
+  --switch-checked-background-color: var(--primary);
+}
+
+input:not([type="checkbox"], [type="radio"]) {
+  width: 320px;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+body {
+  min-height: 110vh;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+article {
+  margin: 8px 4px;
+}
+
+nav {
+  user-select: none;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 3rem;
+  margin-top: 1rem;
+}
+
+nav form input {
+  max-width: 400px;
+}
+
+.dropdown-menu a {
+  text-align: end;
+}
+
+.dropdown-menu ul {
+  width: 8rem;
+}
+
+/* index.html */
+
+.hero {
+  height: 280px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("../images/banner.jpg");
+  background-position: center;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+}
+
+.hero > h1 {
+  color: white;
+  font-size: 120px;
+  font-style: italic;
+  letter-spacing: 4px;
+  margin-top: 32px;
+}
+
+.hero > h1 > a {
+  padding: 60px;
+}
+
+.grid {
+  user-select: none;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 40px 40px;
+}
+
+.grid-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  border-radius: 1%;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+}
+
+.grid-card > img {
+  height: 75%;
+  object-position: center;
+  object-fit: cover;
+  aspect-ratio: 4/3;
+}
+
+.grid-card > div {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px;
+}
+
+.grid-card > div > span:first-child {
+  font-size: larger;
+  margin-bottom: 16px;
+}
+
+.grid-card > div > div {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* login.html */
+
+.login-form {
+  user-select: none;
+  padding: 0 12rem;
+  margin-bottom: 6rem;
+}
+
+.login-form > form > input {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.login-form fieldset input {
+  margin-left: 0.5rem;
+}
+
+/* write.html */
+.write-form {
+  padding: 0 12rem;
+}
+
+.write-form input {
+  width: 100%;
+}
+.write-form input:nth-child(1) {
+  margin-bottom: 1rem;
+}
+
+.photos-container {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.photos-container > label {
+  width: 6rem;
+  margin-right: 1rem;
+}
+
+.photos-container > input {
+  margin: 0;
+}
+
+.photos-container > input:last-child {
+  display: none;
+}
+
+/* me.html */
+
+.me {
+  display: grid;
+  grid-template-columns: 1.5fr 4fr;
+  gap: 0 4rem;
+}
+
+.me__left img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  margin-bottom: 1rem;
+}
+
+.me__left > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.me__left > div > span {
+  margin-bottom: 0.5rem;
+}
+.me span {
+  font-size: 1rem;
+}
+
+.me > div > div {
+  margin-bottom: 1rem;
+}
+
+/* detail.html */
+.detail {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail > h1 {
+  text-align: start;
+}
+
+.detail-body {
+  display: grid;
+  grid-template-columns: 1fr 0.1fr 1fr;
+  margin-bottom: 4rem;
+}
+
+.detail-body__photos {
+  user-select: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  background-color: black;
+}
+
+.detail-body__photos img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  object-position: center;
+}
+
+.divider > hr {
+  margin-bottom: 2rem;
+}
+
+.detail-comment form {
+  user-select: none;
+}
+
+.detail-comment__btns {
+  user-select: none;
+  display: flex;
+  justify-content: end;
+}
+
+.detail-comment__btns button {
+  width: 6rem;
+}
+
+.detail-comment_comments {
+  display: grid;
+  grid-auto-flow: row;
+  grid-auto-rows: 210px;
+  gap: 20px 0;
+}
+.detail-comment_comments > div {
+  margin-bottom: 4rem;
+}
+
+.comment-author {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
