@@ -125,10 +125,10 @@ button {
 }
 
 .grid-card > img {
-  height: 75%;
+  width: 100%;
   object-position: center;
   object-fit: cover;
-  aspect-ratio: 4/3;
+  aspect-ratio: 4/3.5;
 }
 
 .grid-card > div {
@@ -137,9 +137,14 @@ button {
   padding: 16px 20px;
 }
 
+.grid-card > div span {
+  font-size: medium;
+}
 .grid-card > div > span:first-child {
-  font-size: larger;
+  font-size: large;
   margin-bottom: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .grid-card > div > div {
@@ -198,6 +203,7 @@ button {
 
 /* write.html */
 .write-form {
+  user-select: none;
   padding: 0 12rem;
 }
 

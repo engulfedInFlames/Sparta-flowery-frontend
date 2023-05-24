@@ -50,3 +50,64 @@ export const apiGithubLogin = async ({ code, csrftoken }) => {
   );
   return res.data;
 };
+
+export const apiGetArticles = async ({ csrftoken }) => {
+  const res = await ax.get("articles/", {
+    headers: {
+      "X-CSRFToken": csrftoken || "",
+    },
+  });
+  return res.data;
+};
+
+export const apiGetArticleDetail = async ({ csrftoken, pk }) => {
+  const res = await ax.get(`articles/${pk}`, {
+    headers: {
+      "X-CSRFToken": csrftoken || "",
+    },
+  });
+  return res.data;
+};
+
+export const apiPostArticle = async ({
+  csrftoken,
+  access,
+  title,
+  content,
+  photos,
+}) => {
+  const res = await ax.post(
+    "articles/",
+    { title, content, photos },
+    {
+      headers: {
+        "X-CSRFToken": csrftoken || "",
+        Authorization: `Bearer ${access}`,
+      },
+    }
+  );
+  return res.status;
+};
+
+export const apiPostComment = async ({ csrftoken, access, pk, content }) => {
+  const res = await ax.post(
+    `articles/${pk}/comments/`,
+    { content },
+    {
+      headers: {
+        "X-CSRFToken": csrftoken || "",
+        Authorization: `Bearer ${access}`,
+      },
+    }
+  );
+  return res.status;
+};
+
+export const apiToggleArticleLike = async ({ csrftoken, access }) => {
+  const res = await ax.post("articles/", {
+    headers: {
+      "X-CSRFToken": csrftoken || "",
+      Authorization: `Bearer ${access}`,
+    },
+  });
+};

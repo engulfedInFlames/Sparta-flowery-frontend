@@ -1,4 +1,12 @@
-import { apiGetMe, apiGithubLogin, apiPostLogin } from "../api";
+import {
+  apiGetArticleDetail,
+  apiGetArticles,
+  apiGetMe,
+  apiGithubLogin,
+  apiPostArticle,
+  apiPostComment,
+  apiPostLogin,
+} from "../api";
 
 require("dotenv").config();
 
@@ -10,39 +18,49 @@ const cookieOption = {
 export const getHome = async (req, res, next) => {
   const { csrftoken, access } = req.cookies;
   const me = await apiGetMe({ csrftoken, access });
+  const { articles } = await apiGetArticles({ csrftoken });
 
-  return res.render("pages/home", me ? me : null);
+  return res.render("pages/home", me ? { articles, me } : { articles });
 };
 
 export const getMe = async (req, res, next) => {
   const { csrftoken, access } = req.cookies;
   const me = await apiGetMe({ csrftoken, access });
 
-  return res.render("pages/me", me ? me : null);
+  return res.render("pages/me", me ? { me } : null);
 };
 
 export const getWrite = async (req, res, next) => {
   const { csrftoken, access } = req.cookies;
   const me = await apiGetMe({ csrftoken, access });
 
-  return res.render("pages/write", me ? me : null);
+  return res.render("pages/write", me ? { me } : null);
 };
 
 export const postWrite = async (req, res, next) => {
-  return res.end();
+  const { csrftoken, access } = req.cookies;
+  const { title, content, photos } = req.body;
+  // await apiPostArticle({ csrftoken, access, title, content, photos });
+
+  return res.redirect(req.headers.referer || "/");
 };
 
 export const getDetail = async (req, res, next) => {
+  const pk = req.params.pk;
   const { csrftoken, access } = req.cookies;
   const me = await apiGetMe({ csrftoken, access });
-  const pk = req.params.pk;
+  const detail = await apiGetArticleDetail({ csrftoken, pk });
 
-  return res.render("pages/detail", me ? { pk, ...me } : null);
+  return res.render("pages/detail", me ? { ...detail, me } : { ...detail });
 };
 
 export const postComment = async (req, res, next) => {
   const pk = req.params.pk;
-  return res.end();
+  const { csrftoken, access } = req.cookies;
+  const { content } = req.body;
+  await apiPostComment({ csrftoken, access, pk, content });
+
+  return res.redirect(req.headers.referer || "/");
 };
 
 export const getLogin = async (req, res, next) => {

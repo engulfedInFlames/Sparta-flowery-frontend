@@ -10,10 +10,10 @@ nav
         details.dropdown-menu(role='list', dir='rtl')
             summary(aria-haspopup='listbox', role='link') 메뉴
             ul(role='listbox')
-                unless pk
+                unless me
                     li
                         a(href='/login') 로그인
-                if pk
+                if me
                     li
                         a(href='/write') 글쓰기
                     li
