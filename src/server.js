@@ -1,13 +1,13 @@
 import path from "path";
 import express from "express";
 import morgan from "morgan";
-import {
-  handleDetail,
-  handleHome,
-  handleLogin,
-  handleMe,
-  handleWrite,
-} from "./handlers/globalHandler";
+import parser from "body-parser";
+import * as handler from "./handlers/globalHandler";
+
+const cors = require("cors");
+
+require("dotenv").config();
+const cookieParser = require("cookie-parser");
 
 const PORT = 4000;
 
@@ -18,16 +18,24 @@ app.set("view engine", "pug");
 app.set("views", path.join(process.cwd(), "src/views"));
 
 app.use(logger);
+app.use(cors());
+app.use(cookieParser());
+app.use(parser.urlencoded({ extended: true }));
+app.use(parser.json());
+
 app.use(express.static(path.join(process.cwd(), "public")));
 
-app.get("/", handleHome);
-app.get("/login", handleLogin);
-app.get("/me", handleMe);
-app.get("/write", handleWrite);
-app.get("/detail", handleDetail);
-app.get("/:pk(\\d+)", handleDetail);
+app.get("/", handler.getHome);
+app.get("/me", handler.getMe);
+app.route("/write").get(handler.getWrite).post(handler.postWrite);
+app.route("/:pk(\\d+)").get(handler.getDetail).post(handler.postComment);
+app.route("/login").get(handler.getLogin).post(handler.postLogin);
+app.get("/logout", handler.getLogout);
+app.get("/kakao-login", handler.getKakakoLogin);
+app.get("/github-login", handler.getGithubLogin);
+app.get("/google-login", handler.getGoogleLogin);
 
 const handleListening = () =>
-  console.log(`Server listening on http://localhost:${PORT} ✅`);
+  console.log(`Server listening on http://127.0.0.1:${PORT} ✅`);
 
-app.listen(PORT, handleListening);
+app.listen(PORT, "127.0.0.1", handleListening);

@@ -36,11 +36,6 @@
   --switch-checked-background-color: var(--primary);
 }
 
-input:not([type="checkbox"], [type="radio"]) {
-  width: 320px;
-  margin: 0;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -74,6 +69,10 @@ nav {
 
 nav form input {
   max-width: 400px;
+}
+
+button {
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
 .dropdown-menu a {
@@ -152,7 +151,9 @@ nav form input {
 
 .login-form {
   user-select: none;
-  padding: 0 12rem;
+  width: 50%;
+  min-width: 440px;
+  margin: 0 auto;
   margin-bottom: 6rem;
 }
 
@@ -162,6 +163,37 @@ nav form input {
 }
 .login-form fieldset input {
   margin-left: 0.5rem;
+}
+
+.social-login-btns {
+  margin-top: 1rem;
+}
+
+.social-login-btns > a {
+  width: 100%;
+  margin-top: 0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  border: none;
+}
+
+.social-login-btns > a:focus {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+
+.social-login-btns > a:nth-child(1) {
+  color: black;
+  background-color: #f7d74e;
+}
+
+.social-login-btns > a:nth-child(2) {
+  color: white;
+  background-color: black;
+}
+
+.social-login-btns > a:nth-child(3) {
+  color: black;
+  background-color: white;
 }
 
 /* write.html */
@@ -287,4 +319,27 @@ nav form input {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
+}
+
+/* social-login-page.html */
+
+.social-login-text {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  margin-top: 4rem;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+/* for error message */
+.error {
+  width: 100%;
+  background-color: rgba(255, 0, 0, 0.5);
+  color: white;
+  padding: 0.5rem 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid red;
+  border-radius: 4px;
 }

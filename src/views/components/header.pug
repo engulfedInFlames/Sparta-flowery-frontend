@@ -10,9 +10,13 @@ nav
         details.dropdown-menu(role='list', dir='rtl')
             summary(aria-haspopup='listbox', role='link') 메뉴
             ul(role='listbox')
-                li
-                    a(href='/login') 로그인
-                li
-                    a(href='/write') 글쓰기
-                li
-                    a(href='/me') 내 정보
+                unless pk
+                    li
+                        a(href='/login') 로그인
+                if pk
+                    li
+                        a(href='/write') 글쓰기
+                    li
+                        a(href='/me') 내 정보
+                    li
+                        a(href="/logout") 로그아웃
