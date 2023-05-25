@@ -5,6 +5,7 @@ import {
   apiGithubLogin,
   apiPostArticle,
   apiPostComment,
+  apiPostLike,
   apiPostLogin,
 } from "../api";
 
@@ -19,7 +20,6 @@ export const getHome = async (req, res, next) => {
   const { csrftoken, access } = req.cookies;
   const me = await apiGetMe({ csrftoken, access });
   const { articles } = await apiGetArticles({ csrftoken });
-
   return res.render("pages/index", me ? { articles, me } : { articles });
 };
 

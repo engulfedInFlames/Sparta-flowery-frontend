@@ -152,6 +152,12 @@ button {
   justify-content: space-between;
 }
 
+.likes {
+  z-index: 999;
+  padding: 0 2px;
+  margin-left: 4px;
+  color: red;
+}
 /* login.html */
 
 .login-form {
@@ -263,6 +269,7 @@ button {
 }
 
 /* detail.html */
+
 .detail {
   display: flex;
   flex-direction: column;
@@ -278,11 +285,18 @@ button {
   margin-bottom: 4rem;
 }
 
+.title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title > a > h1 {
+  cursor: pointer;
+  user-select: none;
+}
+
 .detail-body__photos {
   user-select: none;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4px;
   background-color: black;
 }
 

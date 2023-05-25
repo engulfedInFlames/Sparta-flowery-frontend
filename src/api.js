@@ -1,7 +1,5 @@
 import axios from "axios";
 
-require("dotenv").config();
-
 const ax = axios.create({
   baseURL: "http://127.0.0.1:8000/api/v1/",
   withCredentials: true,
@@ -103,11 +101,16 @@ export const apiPostComment = async ({ csrftoken, access, pk, content }) => {
   return res.status;
 };
 
-export const apiToggleArticleLike = async ({ csrftoken, access }) => {
-  const res = await ax.post("articles/", {
-    headers: {
-      "X-CSRFToken": csrftoken || "",
-      Authorization: `Bearer ${access}`,
-    },
-  });
+export const apiPostLike = async ({ csrftoken, access, pk }) => {
+  const res = await ax.post(
+    `articles/${pk}/like/`,
+    {},
+    {
+      headers: {
+        "X-CSRFToken": csrftoken || "",
+        Authorization: `Bearer ${access}`,
+      },
+    }
+  );
+  return res.status;
 };

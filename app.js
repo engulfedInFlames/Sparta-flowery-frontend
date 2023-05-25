@@ -27,6 +27,8 @@ app.use(parser.json());
 
 app.use(express.static(path.join(process.cwd(), "public")));
 
+app.route("/").get(handler.getHome);
+
 app.get("/", handler.getHome);
 app.get("/me", handler.getMe);
 app
