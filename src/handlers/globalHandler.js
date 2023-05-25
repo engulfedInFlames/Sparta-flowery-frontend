@@ -20,7 +20,7 @@ export const getHome = async (req, res, next) => {
   const me = await apiGetMe({ csrftoken, access });
   const { articles } = await apiGetArticles({ csrftoken });
 
-  return res.render("pages/home", me ? { articles, me } : { articles });
+  return res.render("pages/index", me ? { articles, me } : { articles });
 };
 
 export const getMe = async (req, res, next) => {
@@ -39,8 +39,11 @@ export const getWrite = async (req, res, next) => {
 
 export const postWrite = async (req, res, next) => {
   const { csrftoken, access } = req.cookies;
-  const { title, content, photos } = req.body;
-  // await apiPostArticle({ csrftoken, access, title, content, photos });
+  const {
+    body: { title, content },
+    file: image,
+  } = req;
+  await apiPostArticle({ csrftoken, access, title, content, image });
 
   return res.redirect(req.headers.referer || "/");
 };

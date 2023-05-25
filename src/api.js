@@ -74,11 +74,11 @@ export const apiPostArticle = async ({
   access,
   title,
   content,
-  photos,
+  image,
 }) => {
   const res = await ax.post(
     "articles/",
-    { title, content, photos },
+    { title, content, image },
     {
       headers: {
         "X-CSRFToken": csrftoken || "",

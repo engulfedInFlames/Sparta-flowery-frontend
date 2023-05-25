@@ -2,17 +2,19 @@ import path from "path";
 import express from "express";
 import morgan from "morgan";
 import parser from "body-parser";
-import * as handler from "./handlers/globalHandler";
-
-const cors = require("cors");
+import * as handler from "./src/handlers/globalHandler";
 
 require("dotenv").config();
+
+const cors = require("cors");
+const multer = require("multer");
 const cookieParser = require("cookie-parser");
 
 const PORT = 4000;
 
 const app = express();
 const logger = morgan("dev");
+const upload = multer();
 
 app.set("view engine", "pug");
 app.set("views", path.join(process.cwd(), "src/views"));
@@ -27,7 +29,10 @@ app.use(express.static(path.join(process.cwd(), "public")));
 
 app.get("/", handler.getHome);
 app.get("/me", handler.getMe);
-app.route("/write").get(handler.getWrite).post(handler.postWrite);
+app
+  .route("/write")
+  .get(handler.getWrite)
+  .post(upload.single("photos"), handler.postWrite);
 app.route("/:pk(\\d+)").get(handler.getDetail).post(handler.postComment);
 app.route("/login").get(handler.getLogin).post(handler.postLogin);
 app.get("/logout", handler.getLogout);

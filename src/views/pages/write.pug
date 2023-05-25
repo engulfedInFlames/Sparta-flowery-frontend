@@ -4,11 +4,11 @@ block main
     .container
         .write-form
             h1 글쓰기
-            form
+            form(method="post", enctype="multipart/form-data")
                 input#title(type='text', name='title', placeholder='제목', aria-label='제목', autocomplete='title', required)
                 textarea#content(name='content', placeholder='내용', aria-label='게시글 내용', rows='7', required)
                 div.photos-container
                     label(for='photos', role='button') 업로드
                     input(type='text', name='upload-result', placeholder='첨부 파일', readonly)
-                    input#photos( type='file', name='photos', accept='image/*')
+                    input#photos( type='file', name='photos', accept='image/*', required)
                 button(type='submit') 등록
