@@ -11,6 +11,7 @@ const multer = require("multer");
 const cookieParser = require("cookie-parser");
 
 const PORT = 3000;
+const NGINX_PORT = 80;
 
 const app = express();
 const logger = morgan("dev");
@@ -42,6 +43,7 @@ app.get("/github-login", handler.getGithubLogin);
 app.get("/google-login", handler.getGoogleLogin);
 
 const handleListening = () =>
-  console.log(`Server listening on http://127.0.0.1:${PORT} ✅`);
+  console.log(`Server listening on http://127.0.0.1:${PORT} 🚀`);
+console.log(`NGiNX listening on port ${NGINX_PORT} 🚀`);
 
 app.listen(PORT, "127.0.0.1", handleListening);

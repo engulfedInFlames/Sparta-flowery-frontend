@@ -74,7 +74,7 @@ export const getLogin = async (req, res, next) => {
   // 카카오 로그인
   const kakaoParams = {
     client_id: process.env.KAKAO_API_KEY,
-    redirect_uri: "http://3.38.105.28/kakao-login",
+    redirect_uri: "http://3.34.155.8/kakao-login",
     response_type: "code",
   };
   const kakaoSeacrhParams = new URLSearchParams(kakaoParams).toString(
@@ -84,7 +84,7 @@ export const getLogin = async (req, res, next) => {
   // 깃허브 로그인
   const githubParams = {
     client_id: process.env.GH_CLIENT_ID,
-    redirect_uri: "http://3.38.105.28/github-login",
+    redirect_uri: "http://3.34.155.8/github-login",
     scope: "read:user,user:email",
   };
 
@@ -93,7 +93,7 @@ export const getLogin = async (req, res, next) => {
   // 구글 로그인
   // const googleParams = {
   //   client_id: process.env.GOOGLE_API_KEY,
-  //   redirect_uri: "",
+  //   redirect_uri: "redirect_uri: "http://3.34.155.8/google-login"",
   //   response_type: "",
   // };
   // const googleSeacrhParams = new URLSearchParams(googleParams).toString(
