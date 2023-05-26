@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const ax = axios.create({
-  baseURL: "http://127.0.0.1:8000/api/v1/",
+  baseURL: "http://3.38.105.28/api/v1/",
   withCredentials: true,
 });
 
-export const apiPostLogin = async ({ email, password, csrftoken }) => {
+export const apiPostLogin = async ({ email, password }) => {
   const res = await ax.post(
     "users/token/",
     {
@@ -13,43 +13,36 @@ export const apiPostLogin = async ({ email, password, csrftoken }) => {
       password,
     },
     {
-      headers: {
-        "X-CSRFToken": csrftoken || "",
-      },
+      headers: {},
     }
   );
   const { access, refresh } = res.data;
   return { access, refresh };
 };
 
-export const apiGetMe = async ({ csrftoken, access }) => {
-  if (!(csrftoken && access)) return;
+export const apiGetMe = async ({ access }) => {
+  if (!access) return;
 
   const res = await ax.get("users/me/", {
     headers: {
-      "X-CSRFToken": csrftoken || "",
       Authorization: `Bearer ${access}`,
     },
   });
   return res.data;
 };
 
-export const apiGithubLogin = async ({ code, csrftoken }) => {
+export const apiGithubLogin = async ({ code }) => {
   const res = await ax.post(
     "users/github-login/",
     {
       code,
     },
-    {
-      headers: {
-        "X-CSRFToken": csrftoken || "",
-      },
-    }
+    {}
   );
   return res.data;
 };
 
-export const apiGetArticles = async ({ csrftoken }) => {
+export const apiGetArticles = async () => {
   const res = await ax.get("articles/", {
     headers: {
       "X-CSRFToken": csrftoken || "",
@@ -58,28 +51,17 @@ export const apiGetArticles = async ({ csrftoken }) => {
   return res.data;
 };
 
-export const apiGetArticleDetail = async ({ csrftoken, pk }) => {
-  const res = await ax.get(`articles/${pk}`, {
-    headers: {
-      "X-CSRFToken": csrftoken || "",
-    },
-  });
+export const apiGetArticleDetail = async ({ pk }) => {
+  const res = await ax.get(`articles/${pk}`, {});
   return res.data;
 };
 
-export const apiPostArticle = async ({
-  csrftoken,
-  access,
-  title,
-  content,
-  image,
-}) => {
+export const apiPostArticle = async ({ access, title, content, image }) => {
   const res = await ax.post(
     "articles/",
     { title, content, image },
     {
       headers: {
-        "X-CSRFToken": csrftoken || "",
         Authorization: `Bearer ${access}`,
       },
     }
@@ -87,13 +69,12 @@ export const apiPostArticle = async ({
   return res.status;
 };
 
-export const apiPostComment = async ({ csrftoken, access, pk, content }) => {
+export const apiPostComment = async ({ access, pk, content }) => {
   const res = await ax.post(
     `articles/${pk}/comments/`,
     { content },
     {
       headers: {
-        "X-CSRFToken": csrftoken || "",
         Authorization: `Bearer ${access}`,
       },
     }

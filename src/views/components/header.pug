@@ -3,9 +3,7 @@ header.hero(role='banner')
         a(href='/') Flowery
 nav
     div 
-    div
-    //- form(action="post")
-        //- input(type="search" name="search" placeholder="search") 
+    div 
     ul
         details.dropdown-menu(role='list', dir='rtl')
             summary(aria-haspopup='listbox', role='link') 메뉴
@@ -16,7 +14,5 @@ nav
                 if me
                     li
                         a(href='/write') 글쓰기
-                    li
-                        a(href='/me') 내 정보
                     li
                         a(href="/logout") 로그아웃

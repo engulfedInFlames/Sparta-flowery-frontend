@@ -10,7 +10,7 @@ const cors = require("cors");
 const multer = require("multer");
 const cookieParser = require("cookie-parser");
 
-const PORT = 4000;
+const PORT = 3000;
 
 const app = express();
 const logger = morgan("dev");
@@ -30,7 +30,6 @@ app.use(express.static(path.join(process.cwd(), "public")));
 app.route("/").get(handler.getHome);
 
 app.get("/", handler.getHome);
-app.get("/me", handler.getMe);
 app
   .route("/write")
   .get(handler.getWrite)
