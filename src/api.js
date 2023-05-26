@@ -43,11 +43,7 @@ export const apiGithubLogin = async ({ code }) => {
 };
 
 export const apiGetArticles = async () => {
-  const res = await ax.get("articles/", {
-    headers: {
-      "X-CSRFToken": csrftoken || "",
-    },
-  });
+  const res = await ax.get("articles/", {});
   return res.data;
 };
 
