@@ -21,7 +21,13 @@ export const getHome = async (req, res, next) => {
   const me = await apiGetMe({ access });
   const { articles } = await apiGetArticles();
 
-  return res.render("pages/index", me ? { articles, me } : { articles });
+  try {
+    const { articles } = await apiGetArticles();
+    return res.render("pages/index", me ? { articles, me } : { articles });
+  } catch (e) {
+    const error = "게시글을 가지고 올 수 없습니다.";
+    return res.render("pages/index", { error });
+  }
 };
 
 // GET "/write"
@@ -29,7 +35,9 @@ export const getWrite = async (req, res, next) => {
   const { access } = req.cookies;
   const me = await apiGetMe({ access });
 
-  return res.render("pages/write", me ? { me } : null);
+  if (!me) return res.redirect("/");
+
+  return res.render("pages/write", { me });
 };
 
 // POST "/write"
@@ -39,9 +47,15 @@ export const postWrite = async (req, res, next) => {
     body: { title, content },
     file: image,
   } = req;
-  await apiPostArticle({ access, title, content, image });
 
-  return res.redirect(req.headers.referer || "/");
+  try {
+    await apiPostArticle({ access, title, content, image });
+
+    return res.redirect("/");
+  } catch (e) {
+    const error = "글쓰기에 실패했습니다.";
+    return res.render("pages/write", { error });
+  }
 };
 
 // GET "/detail"
@@ -49,9 +63,22 @@ export const getDetail = async (req, res, next) => {
   const pk = req.params.pk;
   const { access } = req.cookies;
   const me = await apiGetMe({ access });
-  const detail = await apiGetArticleDetail({ pk });
 
-  return res.render("pages/detail", me ? { ...detail, me } : { ...detail });
+  try {
+    const article = await apiGetArticleDetail({ pk });
+    const {
+      article: { result: jsonString },
+    } = article;
+
+    const validJsonString = jsonString.replace(/'/g, '"');
+    const jsonObject = JSON.parse(validJsonString);
+
+    article.article.result = { ...jsonObject };
+
+    return res.render("pages/detail", me ? { ...article, me } : { ...article });
+  } catch (e) {
+    return res.render("404");
+  }
 };
 
 // POST "/detail"
@@ -59,9 +86,15 @@ export const postComment = async (req, res, next) => {
   const pk = req.params.pk;
   const { access } = req.cookies;
   const { content } = req.body;
-  await apiPostComment({ access, pk, content });
 
-  return res.redirect(req.headers.referer || "/");
+  try {
+    await apiPostComment({ access, pk, content });
+
+    return res.redirect(req.headers.referer || "/");
+  } catch (e) {
+    const error = "댓글 작성에 실패했습니다.";
+    return res.render("pages/detail", { error });
+  }
 };
 
 // GET "/login"
@@ -107,6 +140,24 @@ export const getLogin = async (req, res, next) => {
   return res.render("pages/login", oauthUrls);
 };
 
+// POST "/login"
+export const postLogin = async (req, res, next) => {
+  const { email, password } = req.body;
+  try {
+    const { access, refresh } = await apiPostLogin({
+      email,
+      password,
+    });
+    res.cookie("access", access, cookieOption);
+    res.cookie("refresh", refresh, cookieOption);
+
+    return res.redirect("/");
+  } catch (e) {
+    const error = "로그인에 실패했습니다.";
+    return res.render("pages/login", { error });
+  }
+};
+
 // GET "/logout"
 export const getLogout = async (req, res, next) => {
   res.clearCookie("access");
@@ -115,43 +166,40 @@ export const getLogout = async (req, res, next) => {
   return res.redirect(req.headers.referer || "/");
 };
 
-// POST "/login"
-export const postLogin = async (req, res, next) => {
-  const { email, password } = req.body;
-  const { access, refresh } = await apiPostLogin({
-    email,
-    password,
-  });
-  if (access && refresh) {
-    res.cookie("access", access, cookieOption);
-    res.cookie("refresh", refresh, cookieOption);
-  } else {
-    const error = "로그인에 실패했습니다.";
-
-    return res.render("pages/login", error);
-  }
-
-  return res.redirect("/");
-};
-
-//
-export const getKakakoLogin = async (req, res) => {
-  return res.send("<h1>Kakao Login</h1>");
-};
-
 export const getGithubLogin = async (req, res) => {
   try {
     const { code } = req.query;
     const { access, refresh } = await apiGithubLogin({ code });
+
     res.cookie("access", access, cookieOption);
     res.cookie("refresh", refresh, cookieOption);
-  } catch (e) {
-    console.log(e);
-  }
 
-  return res.redirect("/");
+    return res.redirect("/");
+  } catch (e) {
+    const error = "깃허브 로그인에 실패했습니다.";
+
+    return res.render("pages/login", { error });
+  }
+};
+
+export const getKakakoLogin = async (req, res) => {
+  try {
+    return res.send("<h1>KaKao Login</h1>");
+  } catch (e) {
+    const error = "카카오 로그인에 실패했습니다.";
+    return res.render("pages/login", { error });
+  }
 };
 
 export const getGoogleLogin = async (req, res) => {
-  return res.send("<h1>Google Login</h1>");
+  try {
+    return res.send("<h1>Google Login</h1>");
+  } catch (e) {
+    const error = "구글 로그인에 실패했습니다.";
+    return res.render("pages/login", { error });
+  }
+};
+
+export const get404 = async (req, res) => {
+  return res.render("404");
 };

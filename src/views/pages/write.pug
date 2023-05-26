@@ -12,3 +12,6 @@ block main
                     input(type='text', name='upload-result', placeholder='첨부 파일', readonly)
                     input#photos( type='file', name='photos', accept='image/*', required)
                 button(type='submit') 등록
+                if error 
+                    .error
+                        span=error

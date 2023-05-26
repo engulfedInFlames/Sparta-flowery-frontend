@@ -3,16 +3,16 @@ header.hero(role='banner')
         a(href='/') Flowery
 nav
     div 
-    div 
+    div
     ul
         details.dropdown-menu(role='list', dir='rtl')
             summary(aria-haspopup='listbox', role='link') 메뉴
             ul(role='listbox')
-                unless me
-                    li
-                        a(href='/login') 로그인
                 if me
                     li
                         a(href='/write') 글쓰기
                     li
                         a(href="/logout") 로그아웃
+                else
+                    li
+                        a(href='/login') 로그인
