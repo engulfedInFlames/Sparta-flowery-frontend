@@ -100,17 +100,3 @@ export const apiPostComment = async ({ csrftoken, access, pk, content }) => {
   );
   return res.status;
 };
-
-export const apiPostLike = async ({ csrftoken, access, pk }) => {
-  const res = await ax.post(
-    `articles/${pk}/like/`,
-    {},
-    {
-      headers: {
-        "X-CSRFToken": csrftoken || "",
-        Authorization: `Bearer ${access}`,
-      },
-    }
-  );
-  return res.status;
-};

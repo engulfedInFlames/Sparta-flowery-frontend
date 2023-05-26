@@ -5,7 +5,6 @@ import {
   apiGithubLogin,
   apiPostArticle,
   apiPostComment,
-  apiPostLike,
   apiPostLogin,
 } from "../api";
 
@@ -133,7 +132,7 @@ export const postLogin = async (req, res, next) => {
 };
 
 export const getKakakoLogin = async (req, res) => {
-  return res.render("pages/kakaoLogin");
+  return res.send("<h1>Kakao Login</h1>");
 };
 
 export const getGithubLogin = async (req, res) => {
@@ -151,5 +150,5 @@ export const getGithubLogin = async (req, res) => {
 };
 
 export const getGoogleLogin = async (req, res) => {
-  return res.render("pages/googleLogin");
+  return res.send("<h1>Google Login</h1>");
 };

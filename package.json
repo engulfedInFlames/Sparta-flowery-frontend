@@ -2,7 +2,7 @@
   "name": "flowery-frontend",
   "version": "1.0.0",
   "description": "꽃 사진을 업로드하면 꽃의 종류를 추측합니다.",
-  "main": "js/index.js",
+  "main": "app.js",
   "scripts": {
     "babel-node": "babel-node --presets='@babel/preset-env' --ignore='foo|bar|bas'",
     "dev": "nodemon --exec babel-node app.js"
