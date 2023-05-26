@@ -3,17 +3,20 @@ extends ../base.pug
 block main
     .container
         .grid
-            each article in articles
-                a(href=`/${article.pk}`)
-                    article.grid-card
-                        if article.image
-                            img(src=`http://127.0.0.1:8000${article.image}` alt="The Photo of Article")
-                        else
-                            img(src='https://images.unsplash.com/photo-1468327768560-75b778cbb551?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80' alt="The Photo of Article")
-                        div
-                            span #{article.title}
+            if articles
+                each article in articles
+                    a(href=`/${article.pk}`)
+                        article.grid-card
+                            if article.image
+                                img(src=`http://127.0.0.1:8000${article.image}` alt="The Photo of Article")
+                            else
+                                img(src='https://placehold.co/600x800?text=image', alt='Placehold Image')
                             div
-                            span #{article.user}
-                            div 
-                                span #{article.created_at}
+                                span #{article.title}
+                                div
+                                span #{article.user}
+                                div 
+                                    span #{article.created_at}
+            else
+                h1=error
     

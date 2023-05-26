@@ -24,23 +24,22 @@ app.use(cors());
 app.use(cookieParser());
 app.use(parser.urlencoded({ extended: true }));
 app.use(parser.json());
-
 app.use(express.static(path.join(process.cwd(), "public")));
 
-app.route("/").get(handler.getHome);
+app.get("/", handler.getHome);
 
 app.get("/", handler.getHome);
-app.get("/me", handler.getMe);
+app.get("/logout", handler.getLogout);
+app.get("/kakao-login", handler.getKakakoLogin);
+app.get("/github-login", handler.getGithubLogin);
+app.get("/google-login", handler.getGoogleLogin);
 app
   .route("/write")
   .get(handler.getWrite)
   .post(upload.single("photos"), handler.postWrite);
 app.route("/:pk(\\d+)").get(handler.getDetail).post(handler.postComment);
 app.route("/login").get(handler.getLogin).post(handler.postLogin);
-app.get("/logout", handler.getLogout);
-app.get("/kakao-login", handler.getKakakoLogin);
-app.get("/github-login", handler.getGithubLogin);
-app.get("/google-login", handler.getGoogleLogin);
+app.use(handler.get404);
 
 const handleListening = () =>
   console.log(`Server listening on http://127.0.0.1:${PORT} ✅`);

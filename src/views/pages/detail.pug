@@ -8,12 +8,27 @@ block main
             h1 #{article.title}
                   
         p #{article.content}
+        
       div
       .detail-body__photos
         if article.image
           img(src=`http://127.0.0.1:8000${article.image}`, alt="The Photo of Article")
         else
-          img(src='https://images.unsplash.com/photo-1468327768560-75b778cbb551?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80', alt='The Photo of Article')
+          img(src='https://placehold.co/600x800?text=image', alt='Placehold Image')
+    if article.result
+          table
+            thead
+              tr
+                  th(scope="col") #
+                  th(scope="col") 꽃 이름
+                  th(scope="col") 확률
+            tbody
+              - let counter = 1
+              each value, key in article.result
+                tr
+                  th(scope="row")= counter++
+                  td=key
+                  td #{value}&#37;
     .divider
       hr
     .detail-comment
@@ -25,6 +40,9 @@ block main
             button(type='submit') 등록
           else
             button(type='submit', disabled) 등록
+        if error 
+          .error
+            span=error
       .detail-comment_comments
         each comment in comments
           div

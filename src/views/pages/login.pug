@@ -14,7 +14,7 @@ block main
                         input#remember(type='checkbox', role='switch', name='remember')
                 if error 
                     .error
-                        span 이메일 또는 비밀번호를 잘못 입력했습니다.
+                        span=error
                 button(type='submit') 로그인
 
             hr
