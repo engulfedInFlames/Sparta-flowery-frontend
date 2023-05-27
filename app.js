@@ -27,8 +27,6 @@ app.use(parser.json());
 app.use(express.static(path.join(process.cwd(), "public")));
 
 app.get("/", handler.getHome);
-
-app.get("/", handler.getHome);
 app.get("/logout", handler.getLogout);
 app.get("/kakao-login", handler.getKakakoLogin);
 app.get("/github-login", handler.getGithubLogin);
